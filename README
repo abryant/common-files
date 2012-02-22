@@ -1,0 +1,11 @@
+My set of common files (mainly config files and scripts).
+-Anthony Bryant.
+
+To install, clone from your home folder and run:
+~/common-files/setup
+
+Warning: read the setup script before running it!
+
+Running setup will replace all of the config files it maintains with symlinks
+to the checked-out versions. It will also replace ~/scripts with a symlink.
+

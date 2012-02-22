@@ -1,0 +1,7 @@
+#!/bin/bash
+# An easy way of playing a tune with pcspkr without typing "beep -f X -l Y" over and over again
+
+cat $1 | while read line
+do
+  sudo beep `echo $line | sed -n 's_\([0-9]\+\)\s\([0-9]\+\)_-f \1 -l \2_gp'`
+done

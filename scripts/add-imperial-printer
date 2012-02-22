@@ -1,0 +1,14 @@
+#!/bin/bash
+
+if test -z "$1"
+then
+  echo "Usage: $0 username"
+else
+  username=$1
+  lpadmin -p "Monochrome-$username" -v "lpd://$username@ictprintservice.cc.ic.ac.uk/ICTprintservice_mono" -E
+  if [[ $? -ne 0 ]]
+  then
+    echo "lpadmin failed"
+  fi
+fi
+

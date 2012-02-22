@@ -1,0 +1,23 @@
+#!/bin/sh
+# Transcodes all mp3 files in the current folder to mp3s
+# Basically re-records them to be at the same bit rate etc...
+# First, a file is transcoded to wav using mplayer
+# Then, it is transcoded to mp3 using lame
+# Then, the temporary wav file is removed
+
+
+for inputFile in ./*.mp3
+do
+  if [ -f "$inputFile" ]
+  then
+    # work out baseName and print converting message
+    baseName="${inputFile%.mp3}"
+    echo "Converting $inputFile to $baseName-ReDone.mp3..."
+    mplayer "$inputFile" -ao pcm:file="$baseName.wav"
+    lame -b 160 "$baseName.wav" "$baseName-ReDone.mp3"
+    rm -f "$baseName.wav"
+  fi
+  
+done
+
+exit 0

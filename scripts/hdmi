@@ -1,0 +1,32 @@
+#!/bin/bash
+
+MAIN_OUTPUT="LVDS1"
+OUTPUT="HDMI1"
+
+case $0 in
+  hdmi)
+    OUTPUT="HDMI1"
+    ;;
+  vga)
+    OUTPUT="DP1"
+    ;;
+esac
+
+case $1 in
+  left|normal|right)
+    xrandr --output $OUTPUT --auto --right-of $MAIN_OUTPUT --rotate $1
+    ;;
+  on|enable)
+    xrandr --output $OUTPUT --auto --right-of $MAIN_OUTPUT
+    ;;
+  off|disable)
+    xrandr --output $MAIN_OUTPUT --auto --output $OUTPUT --off
+    ;;
+  only)
+    xrandr --output $OUTPUT --auto --output $MAIN_OUTPUT --off
+    ;;
+  second|secondary)
+    xrandr --output $MAIN_OUTPUT --auto --output $OUTPUT --auto --right-of $MAIN_OUTPUT
+    ;;
+esac
+

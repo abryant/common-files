@@ -1,0 +1,13 @@
+#!/bin/bash
+
+action="$*"
+if test -z $action
+then
+  action="start"
+fi
+
+sudo /etc/rc.d/httpd $action
+sudo /etc/rc.d/tomcat $action
+
+exit 0
+

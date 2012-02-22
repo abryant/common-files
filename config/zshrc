@@ -1,0 +1,134 @@
+# The following lines were added by compinstall
+zstyle ':completion:*' preserve-prefix '//[^/]##/'
+zstyle ':completion:*' squeeze-slashes true
+zstyle :compinstall filename '/home/anthony/.zshrc'
+
+autoload -Uz compinit
+compinit
+
+# End of lines added by compinstall
+# Lines configured by zsh-newuser-install
+HISTFILE=~/.zsh-history
+HISTSIZE=10000
+SAVEHIST=10000
+# End of lines configured by zsh-newuser-install
+
+# MANUALLY ADDED FROM HERE ONWARDS
+
+# switch to emacs mode
+bindkey -e
+
+# bind special keys according to readline configuration
+# (since zsh doesn't read /etc/inputrc or ~/.inputrc by default)
+eval "$(sed -n 's/^/bindkey /; s/: / /p' /etc/inputrc)"
+
+# make autocomplete case insensitive
+zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}'
+
+# tab completion for PID
+zstyle ':completion:*:*:kill:*' menu yes select
+zstyle ':completion:*:kill:*' force-list always
+
+#bindkey "[A" 'history-beginning-search-backward'
+#bindkey "[B" 'history-beginning-search-forward'
+
+
+# change the prompt layout
+# export PROMPT="%n@%m:%~$ "
+source ~/scripts/setprompt
+
+# add ~/scripts to PATH
+export PATH=$PATH:/home/anthony/scripts
+
+# turn on .my-setup files, which are automatically sourced when you cd to anywhere under the folder they are in (including that folder itself)
+# this uses scripts/findup to find the .my-setup file. copied from a kde development script.
+function cd() {
+  if test -z "$1"; then
+    builtin cd
+  elif test -z "$2"; then
+    builtin cd "$1"
+  else
+    builtin cd "$1" "$2"
+  fi
+  _f=`findup .my-setup`
+  if test -n "$_f" -a "$_lastf" != "$_f"; then
+    echo "Loading $_f"
+    _lastf="$_f"
+    source "$_f"
+  fi
+}
+
+# make flags, use 9 threads
+export MAKEFLAGS=-j9
+
+# load the keychain, if it has already started
+local script="$HOME/.keychain/${HOST}-sh"
+if [ -f $script ]; then
+  source $script
+  if [ -n $SSH_AGENT_PID ]; then
+    # if the process is not running, delete the keychain script
+    ps -p $SSH_AGENT_PID > /dev/null || rm $script
+  fi
+fi
+
+
+# automatic keychain for ssh and scp
+function start_keychain() {
+  local script="$HOME/.keychain/${HOST}-sh"
+  if [ -f $script ]; then
+    source $script
+    if [ -n $SSH_AGENT_PID ]; then
+      # if the process is not running, delete the keychain script
+      ps -p $SSH_AGENT_PID > /dev/null || rm $script
+    fi
+  fi
+  [ -f $script ] || keychain -Q -q --nogui $HOME/.ssh/id_rsa
+  [ -f $script ] && source $script
+  $*
+}
+
+function stop_keychain() {
+  keychain --stop all
+  unset SSH_AGENT_PID
+  unset SSH_AUTH_SOCK
+}
+
+function keys()
+{
+  if [[ "$1" == "off" ]]
+  then
+    stop_keychain
+  else
+    start_keychain
+  fi
+}
+
+# do not use aliases for these, or tab completion will break
+function ssh() {
+  start_keychain /usr/bin/ssh $*
+}
+function scp() {
+  start_keychain /usr/bin/scp $*
+}
+
+function silent() {
+  $* &> /dev/null &
+}
+
+# useful ls aliases
+alias ll='ls -l'
+alias ls='ls --color=auto -F'
+alias la='ls -al'
+
+alias sl=ls
+
+alias dolphin='dolphin . &> /dev/null &'
+
+alias lcdoff='vbetool dpms off'
+alias lcdon='vbetool dpms on'
+
+alias suicide='kill -9 $$'
+
+alias gits='git status'
+alias tiga='tig --all'
+

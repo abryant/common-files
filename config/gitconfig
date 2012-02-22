@@ -1,0 +1,22 @@
+[color]
+  ui = true
+[user]
+  name = Anthony Bryant
+  email = anthony@bryants.eu
+[alias]
+  st = status
+  pretty-graph = log --graph --pretty=format:\"%Cred%h%Creset — %s %Cgreen(%cr)%Creset\" --abbrev-commit --date=relative
+  br = branch -a
+  dis = diff --staged
+  dif = diff
+[tig]
+  show-rev-graph = yes
+  show-line-numbers = true
+  show-refs = true
+[url "git://anongit.kde.org/"]
+  insteadOf = kde:
+[url "ssh://git@git.kde.org/"]
+  pushInsteadOf = kde:
+[branch]
+  autosetuprebase = always
+

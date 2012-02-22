@@ -1,0 +1,22 @@
+#!/bin/sh
+# Transcodes all wma files in a folder to mp3s
+# First, a file is transcoded to wav using mplayer
+# Then, it is transcoded to mp3 using lame
+# Then, the temporary wav file is removed
+
+
+for inputFile in ./*.wma
+do
+  if [ -f "$inputFile" ]
+  then
+    # work out baseName and print converting message
+    baseName="${inputFile%.wma}"
+    echo "Converting $inputFile to $baseName.mp3..."
+    mplayer "$inputFile" -ao pcm:file="$baseName.wav"
+    lame -b 160 "$baseName.wav" "$baseName.mp3"
+    rm -f "$baseName.wav"
+  fi
+  
+done
+
+exit 0

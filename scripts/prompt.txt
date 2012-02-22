@@ -1,0 +1,4 @@
+autoload colors zsh/terminfo
+colors
+export PROMPT="%{%(\!.$fg[red].$fg[yellow])%}%~%{$fg[default]%}$ "
+export RPROMPT="[%{$fg[yellow]%}%*%{$fg[default]%} on %{$fg[yellow]%}%D%{$fg[default]%}]"

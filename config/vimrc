@@ -1,0 +1,70 @@
+filetype plugin indent on
+
+set autoindent
+set tabstop=2
+" set softtabstop=2
+set shiftwidth=2
+set expandtab
+
+
+" comment blocks
+set formatoptions=tcrq
+
+syntax on
+
+" line numbers
+set number
+
+" colour line numbers
+hi LineNr ctermfg=darkgrey ctermbg=none guifg=darkgrey guibg=none
+
+" Check if we're using a dark background
+if $darkxterm != ''
+  set bg = dark
+  " fix colours for folded lines
+  hi Folded ctermfg=darkblue ctermbg=grey
+  hi FoldColumn ctermfg=darkblue ctermbg=grey
+endif
+
+" Disable expandtab for makefiles
+" autocmd FileType make setlocal noexpandtab
+
+" Key mapping for paste - F2
+set pastetoggle=<F2>
+
+" Make sure 3 lines are shown around the cursor when scrolling
+set scrolloff=3
+
+" Show tabs and trailing spaces
+set listchars=tab:>-,trail:·
+set list
+
+" Allow wrapping (note: for this to work, you must set nolist as well)
+set wrap
+set linebreak
+
+" Scroll through wrapped lines nicely
+nnoremap j gj
+vnoremap j gj
+nnoremap k gk
+vnoremap k gk
+nnoremap 0 g0
+vnoremap 0 g0
+nnoremap ^ g^
+vnoremap ^ g^
+nnoremap $ g$
+vnoremap $ g$
+
+nnoremap <Down> gj
+vnoremap <Down> gj
+inoremap <Down> <C-o>gj
+nnoremap <Up> gk
+vnoremap <Up> gk
+inoremap <Up> <C-o>gk
+nnoremap <Home> g^
+vnoremap <Home> g^
+inoremap <Home> <C-o>g^
+nnoremap <End> g$
+vnoremap <End> g$
+inoremap <End> <C-o>g$
+

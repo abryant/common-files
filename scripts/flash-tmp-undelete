@@ -1,0 +1,8 @@
+#!/bin/bash
+
+cd /tmp
+for h in `find /proc/*/fd -ilname "/tmp/Flash*" 2>/dev/null`
+do
+  ln -s "$h" `readlink "$h" | cut -d' ' -f1`;
+done
+

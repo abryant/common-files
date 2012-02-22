@@ -1,0 +1,25 @@
+#!/bin/bash
+
+DIR="$(cd "$(dirname "$0")" && pwd )"
+
+rm ~/.zshrc
+ln -s "$DIR/config/zshrc" ~/.zshrc
+rm ~/.gitconfig
+ln -s "$DIR/config/gitconfig" ~/.gitconfig
+rm ~/.htoprc
+ln -s "$DIR/config/htoprc" ~/.htoprc
+rm ~/.vimrc
+ln -s "$DIR/config/vimrc" ~/.vimrc
+
+# append to the current file, do not replace it
+# also, don't use a symlink, in case a local authorized key set needs to be different to the common files one
+if diff -s "$DIR/config/authorized_keys" ~/.ssh/authorized_keys
+then
+  rm ~/.ssh/authorized_keys
+fi
+cat "$DIR/config/authorized_keys" >> ~/.ssh/authorized_keys
+
+rm -rf ~/scripts
+ln -s "$DIR/scripts" ~/scripts
+
+

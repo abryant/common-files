@@ -1,0 +1,7 @@
+# source this and `alias man=mantest` to confuse someone
+function mantest() {
+  echo "#!/bin/sh" > ~/scripts/fakebin/$1
+  chmod +x ~/scripts/fakebin/$1
+  man $*
+  rehash
+}

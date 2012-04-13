@@ -141,3 +141,8 @@ alias suicide='kill -9 $$'
 alias gits='git status'
 alias tiga='tig --all'
 
+function git-rm-deleted()
+{
+  git diff --name-only --diff-filter=D -z | xargs -0 git rm --cached
+}
+

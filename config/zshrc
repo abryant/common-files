@@ -82,46 +82,6 @@ if [ -f $script ]; then
   fi
 fi
 
-
-# automatic keychain for ssh and scp
-function start_keychain() {
-  local script="$HOME/.keychain/${HOST}-sh"
-  if [ -f $script ]; then
-    source $script
-    if [ -n $SSH_AGENT_PID ]; then
-      # if the process is not running, delete the keychain script
-      ps -p $SSH_AGENT_PID > /dev/null || rm $script
-    fi
-  fi
-  [ -f $script ] || keychain -Q -q --nogui $HOME/.ssh/id_rsa
-  [ -f $script ] && source $script
-  $*
-}
-
-function stop_keychain() {
-  keychain --stop all
-  unset SSH_AGENT_PID
-  unset SSH_AUTH_SOCK
-}
-
-function keys()
-{
-  if [[ "$1" == "off" ]]
-  then
-    stop_keychain
-  else
-    start_keychain
-  fi
-}
-
-# do not use aliases for these, or tab completion will break
-function ssh() {
-  start_keychain /usr/bin/ssh $*
-}
-function scp() {
-  start_keychain /usr/bin/scp $*
-}
-
 function silent() {
   $* &> /dev/null &
 }

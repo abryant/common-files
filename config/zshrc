@@ -49,6 +49,8 @@ source ~/scripts/setprompt
 # add ~/scripts to PATH
 export PATH=$PATH:/home/anthony/scripts
 
+export EDITOR=$(which vim)
+
 # turn on .my-setup files, which are automatically sourced when you cd to anywhere under the folder they are in (including that folder itself)
 # this uses scripts/findup to find the .my-setup file. copied from a kde development script.
 function cd() {

@@ -16,15 +16,12 @@ syntax on
 set number
 
 " colour line numbers
-hi LineNr ctermfg=darkgrey ctermbg=none guifg=darkgrey guibg=none
+hi LineNr ctermfg=darkgrey guifg=darkgrey
 
-" Check if we're using a dark background
-if $darkxterm != ''
-  set bg = dark
-  " fix colours for folded lines
-  hi Folded ctermfg=darkblue ctermbg=grey
-  hi FoldColumn ctermfg=darkblue ctermbg=grey
-endif
+set bg=dark
+" fix colours for folded lines
+hi Folded ctermfg=darkblue ctermbg=grey
+hi FoldColumn ctermfg=darkblue ctermbg=grey
 
 " Disable expandtab for makefiles
 " autocmd FileType make setlocal noexpandtab

@@ -20,7 +20,7 @@ bindkey -e
 
 # bind special keys according to readline configuration
 # (since zsh doesn't read /etc/inputrc or ~/.inputrc by default)
-eval "$(sed -n 's/^/bindkey /; s/: / /p' /etc/inputrc)"
+eval "$(sed -n 's/^/bindkey /; s/: / /p' /etc/inputrc | grep '^[^#]*$')"
 
 # make autocomplete case insensitive
 zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}'

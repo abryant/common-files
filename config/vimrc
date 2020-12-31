@@ -26,6 +26,8 @@ hi FoldColumn ctermfg=darkblue ctermbg=grey
 " Disable expandtab for makefiles
 " autocmd FileType make setlocal noexpandtab
 
+autocmd Filetype python setlocal expandtab tabstop=2 shiftwidth=2 softtabstop=2
+
 " Key mapping for paste - F2
 set pastetoggle=<F2>
 

@@ -11,10 +11,11 @@ setopt prompt_subst
 
 
 # the prompt
-# this is just $NOTPROMPT above and all of its expansions collapsed onto one line
+# this is based on $NOTPROMPT above, with all of its expansions collapsed onto one line
+# (with the hostname and a colon added on the start).
 # to edit this, first edit NOTPROMPT and its path expansion if necessary
 # then remove "export PROMPT='...'"
 # and finally copy and paste NOTPROMPT and all of its expansions to PROMPT,
 # between a pair of single quotes (if you use double quotes the prompt will be constant)
-export PROMPT='%{%(!.$fg[red].$fg[yellow])%}${(r:1:)${(%):-%~}}$([[ ${(r:1:)${(%):-%~}} != "/" && ${#${(%):-%~}} -gt 1 ]] && echo /)$([[ ${#${(@s:/:)${(%):-%~/a}[2,-1]}} -gt 3 ]] && echo ${(j:/:)${(@r:1:)${(s:/:)${(%):-%~}[2,-1]}[(ws:/:)1,(ws:/:)-3]}}/)$([[ ${#${(@s:/:)${(%):-%~/a}[2,-1]}} -gt 2 ]] && echo ${(@j:/:)${(s:/:)${(%):-%~}[2,-1]}[-2,-1]})$([[ ${#${(@s:/:)${(%):-%~/a}[2,-1]}} -eq 2 ]] && echo ${${(s:/:)${(%):-%~}}[-1]})%{%(!.$fg[yellow].$fg[red])%}%(?..%B(%?%)%b)%{$fg[default]%}$ '
+export PROMPT='%{$fg[red]%}%m%{$fg[default]%}:%{%(!.$fg[red].$fg[yellow])%}${(r:1:)${(%):-%~}}$([[ ${(r:1:)${(%):-%~}} != "/" && ${#${(%):-%~}} -gt 1 ]] && echo /)$([[ ${#${(@s:/:)${(%):-%~/a}[2,-1]}} -gt 3 ]] && echo ${(j:/:)${(@r:1:)${(s:/:)${(%):-%~}[2,-1]}[(ws:/:)1,(ws:/:)-3]}}/)$([[ ${#${(@s:/:)${(%):-%~/a}[2,-1]}} -gt 2 ]] && echo ${(@j:/:)${(s:/:)${(%):-%~}[2,-1]}[-2,-1]})$([[ ${#${(@s:/:)${(%):-%~/a}[2,-1]}} -eq 2 ]] && echo ${${(s:/:)${(%):-%~}}[-1]})%{%(!.$fg[yellow].$fg[red])%}%(?..%B(%?%)%b)%{$fg[default]%}$ '
 export RPROMPT='[%{$fg[yellow]%}%*%{$fg[default]%} on %{$fg[yellow]%}%D%{$fg[default]%}]'

@@ -1,0 +1,80 @@
+# The following lines were added by compinstall
+zstyle ':completion:*' preserve-prefix '//[^/]##/'
+zstyle ':completion:*' squeeze-slashes true
+zstyle :compinstall filename '/root/.zshrc'
+
+autoload -Uz compinit
+compinit
+
+# End of lines added by compinstall
+# Lines configured by zsh-newuser-install
+HISTFILE=~/.zsh-history
+HISTSIZE=10000
+SAVEHIST=10000
+# End of lines configured by zsh-newuser-install
+
+# MANUALLY ADDED FROM HERE ONWARDS
+
+# don't add things to the history file if they begin with a space (useful for passwords)
+setopt HIST_IGNORE_SPACE
+
+# switch to emacs mode
+bindkey -e
+
+# bind special keys according to readline configuration
+# (since zsh doesn't read /etc/inputrc or ~/.inputrc by default)
+eval "$(sed -n 's/^/bindkey /; s/: / /p' /etc/inputrc)"
+
+# make autocomplete case insensitive
+zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}'
+
+# tab completion for PID
+zstyle ':completion:*:*:kill:*' menu yes select
+zstyle ':completion:*:kill:*' force-list always
+
+#bindkey "^[[A" 'history-beginning-search-backward'
+#bindkey "^[[B" 'history-beginning-search-forward'
+
+# Less Colors for Man Pages
+export LESS_TERMCAP_mb=$'\E[01;31m'       # begin blinking
+export LESS_TERMCAP_md=$'\E[01;38;5;74m'  # begin bold
+export LESS_TERMCAP_me=$'\E[0m'           # end mode
+export LESS_TERMCAP_se=$'\E[0m'           # end standout-mode
+export LESS_TERMCAP_so=$'\E[38;5;246m'    # begin standout-mode - info box
+export LESS_TERMCAP_ue=$'\E[0m'           # end underline
+export LESS_TERMCAP_us=$'\E[04;38;5;146m' # begin underline
+
+
+# change the prompt layout
+autoload colors zsh/terminfo
+colors
+setopt prompt_subst
+export PROMPT="%{$fg[red]%}%m%{$fg[default]%}:%{%(!.$fg[red].$fg[yellow])%}%~%{%(!.$fg[yellow].$fg[red])%}%(?..%B(%?%)%b)%{$fg[default]%}$ "
+export RPROMPT='[%{$fg[yellow]%}%*%{$fg[default]%} on %{$fg[yellow]%}%D%{$fg[default]%}]'
+
+# useful ls aliases
+alias ll='ls -l'
+alias ls='ls --color=auto -F'
+alias la='ls -al'
+
+alias sl=ls
+
+alias dolphin='dolphin . &> /dev/null &'
+
+alias lcdoff='vbetool dpms off'
+alias lcdon='vbetool dpms on'
+
+alias suicide='kill -9 $$'
+
+alias gits='git status'
+alias tiga='tig --all'
+
+function svn-clean-completely()
+{
+  svn status --no-ignore | grep '^[I?]' | cut -c9- | xargs -d \\n rm -r
+}
+
+function git-rm-deleted()
+{
+  git diff --name-only --diff-filter=D -z | xargs -0 git rm --cached
+}
